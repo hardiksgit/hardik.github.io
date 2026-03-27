@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hardik Parmar — Backend Engineer</title>
+  <meta name="description" content="Senior Software Engineer specializing in TypeScript, Node.js, AWS, and scalable backend systems." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d1117;
+      --bg2: #161b22;
+      --bg3: #21262d;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --accent2: #3fb950;
+      --tag-bg: #1f3a5f;
+      --tag-text: #79c0ff;
+      --font: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(13,17,23,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { font-weight: 700; font-size: 1rem; color: var(--text); text-decoration: none; letter-spacing: -0.3px; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+
+    /* SECTIONS */
+    section { padding: 5rem 0; }
+    .container { max-width: 860px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding-top: 56px;
+      background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(88,166,255,0.08), transparent);
+    }
+    .hero-inner { display: flex; flex-direction: column; gap: 1.25rem; }
+    .hero-greeting { font-size: 0.875rem; color: var(--accent); font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; }
+    .hero-name { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; }
+    .hero-title {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      color: var(--muted); font-weight: 400;
+    }
+    .hero-title strong { color: var(--text); }
+    .hero-desc { font-size: 1rem; color: var(--muted); max-width: 560px; }
+    .hero-cta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.5rem; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.55rem 1.25rem; border-radius: 6px;
+      font-size: 0.875rem; font-weight: 500; text-decoration: none;
+      transition: all 0.2s; cursor: pointer; border: none;
+    }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-primary:hover { background: #79c0ff; }
+    .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+    .hero-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .hero-link {
+      color: var(--muted); text-decoration: none; font-size: 0.875rem;
+      display: flex; align-items: center; gap: 0.35rem;
+      transition: color 0.2s;
+    }
+    .hero-link:hover { color: var(--accent); }
+
+    /* SECTION HEADER */
+    .section-header { margin-bottom: 2.5rem; }
+    .section-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); font-weight: 600; margin-bottom: 0.4rem; }
+    .section-title { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.5px; }
+    .section-line { width: 40px; height: 3px; background: var(--accent); border-radius: 2px; margin-top: 0.75rem; }
+
+    /* SKILLS */
+    #skills { background: var(--bg2); }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; }
+    .skill-group { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; }
+    .skill-group-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; margin-bottom: 0.85rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag {
+      background: var(--tag-bg); color: var(--tag-text);
+      padding: 0.2rem 0.65rem; border-radius: 4px;
+      font-size: 0.8rem; font-weight: 500; white-space: nowrap;
+    }
+    .tag.green { background: #1a3d2e; color: #56d364; }
+    .tag.purple { background: #2d1f4f; color: #bc8cff; }
+    .tag.orange { background: #3d2a1a; color: #ffa657; }
+
+    /* EXPERIENCE */
+    .timeline { position: relative; padding-left: 1.5rem; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: 8px; bottom: 0;
+      width: 1px; background: var(--border);
+    }
+    .timeline-item { position: relative; margin-bottom: 2.75rem; }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-dot {
+      position: absolute; left: -1.85rem; top: 8px;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--bg);
+      box-shadow: 0 0 0 3px rgba(88,166,255,0.2);
+    }
+    .timeline-dot.green {
+      background: var(--accent2);
+      box-shadow: 0 0 0 3px rgba(63,185,80,0.2);
+    }
+    .timeline-meta { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.2rem; }
+    .timeline-role { font-size: 1.05rem; font-weight: 700; }
+    .timeline-company { color: var(--accent); font-size: 0.9rem; font-weight: 500; }
+    .timeline-date { color: var(--muted); font-size: 0.8rem; margin-left: auto; }
+    .timeline-location { color: var(--muted); font-size: 0.8rem; }
+    .timeline-body { margin-top: 0.75rem; }
+    .timeline-body ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .timeline-body li {
+      font-size: 0.9rem; color: var(--muted); padding-left: 1rem; position: relative;
+    }
+    .timeline-body li::before { content: '›'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+    .timeline-body li strong { color: var(--text); }
+
+    /* PROJECTS */
+    #projects { background: var(--bg2); }
+    .projects-grid { display: grid; gap: 1.25rem; }
+    .project-card {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .project-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.75rem; }
+    .project-name { font-size: 1.05rem; font-weight: 700; }
+    .project-badge { background: rgba(88,166,255,0.12); color: var(--accent); font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.55rem; border-radius: 100px; white-space: nowrap; }
+    .project-desc { font-size: 0.875rem; color: var(--muted); margin-bottom: 1rem; }
+    .project-desc li { margin-left: 1rem; margin-bottom: 0.25rem; }
+
+    /* EDUCATION */
+    .edu-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.5rem;
+      display: flex; align-items: flex-start; gap: 1.25rem;
+    }
+    .edu-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: rgba(88,166,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem; flex-shrink: 0;
+    }
+    .edu-degree { font-weight: 700; font-size: 1rem; }
+    .edu-school { color: var(--accent); font-size: 0.9rem; margin-top: 0.15rem; }
+    .edu-meta { color: var(--muted); font-size: 0.8rem; margin-top: 0.25rem; }
+
+    /* CONTACT */
+    #contact { text-align: center; }
+    .contact-desc { color: var(--muted); margin: 0.75rem auto 2rem; max-width: 480px; }
+    .contact-cards { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.75rem; }
+    .contact-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 0.75rem 1.25rem;
+      text-decoration: none; color: var(--text);
+      font-size: 0.875rem; display: flex; align-items: center; gap: 0.5rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .contact-card:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* BLOG */
+    #blog { background: var(--bg2); }
+    .blog-empty {
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      padding: 3.5rem 2rem;
+      text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    }
+    .blog-empty-icon { font-size: 2.5rem; line-height: 1; }
+    .blog-empty-title { font-size: 1.1rem; font-weight: 600; color: var(--text); }
+    .blog-empty-desc { font-size: 0.875rem; color: var(--muted); max-width: 400px; }
+    .blog-topics { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-top: 0.25rem; }
+    .blog-topic {
+      padding: 0.25rem 0.75rem; border-radius: 100px;
+      font-size: 0.78rem; font-weight: 500; border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .blog-topic.tech   { border-color: #1f3a5f; color: var(--tag-text); background: rgba(31,58,95,0.4); }
+    .blog-topic.travel { border-color: #3d2a1a; color: #ffa657; background: rgba(61,42,26,0.4); }
+    .blog-topic.sport  { border-color: #1a3d2e; color: #56d364; background: rgba(26,61,46,0.4); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    /* SCROLL FADE IN */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    /* MOBILE */
+    @media (max-width: 640px) {
+      nav { padding: 0 1rem; }
+      .nav-links { gap: 1rem; }
+      .timeline-date { margin-left: 0; }
+      .edu-card { flex-direction: column; gap: 0.75rem; }
+    }
+    @media (max-width: 480px) {
+      .nav-links li:nth-child(n+4) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">HP<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <p class="hero-greeting">Hi there, I'm</p>
+      <h1 class="hero-name">Hardik Parmar</h1>
+      <p class="hero-title"><strong>Senior Software Engineer</strong> · Backend &amp; Distributed Systems</p>
+      <p class="hero-desc">
+        I build high-performance backend systems, scalable microservices, and event-driven architectures using TypeScript, Node.js, and AWS. Currently at <strong style="color:var(--text)">Bacancy Technology</strong>.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#contact">Get in touch</a>
+        <a class="btn btn-outline" href="#experience">View experience</a>
+      </div>
+      <div class="hero-links">
+        <a class="hero-link" href="mailto:parmarhardik633@gmail.com">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          parmarhardik633@gmail.com
+        </a>
+        <a class="hero-link" href="https://github.com/hardiksgit" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          github.com/hardiksgit
+        </a>
+        <a class="hero-link" href="https://linkedin.com/in/hardik98" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          linkedin.com/in/hardik98
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-header fade-in">
+      <p class="section-label">What I work with</p>
+      <h2 class="section-title">Technical Skills</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid fade-in">
+      <div class="skill-group">
+        <p class="skill-group-title">Backend</p>
+        <div class="tags">
+          <span class="tag">TypeScript</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">Express.js</span>
+          <span class="tag">JavaScript ES6+</span>
+          <span class="tag">SQL</span>
+          <span class="tag purple">REST APIs</span>
+          <span class="tag purple">Microservices</span>
+          <span class="tag purple">Event-driven</span>
+          <span class="tag purple">TDD</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <p class="skill-group-title">Databases &amp; Caching</p>
+        <div class="tags">
+          <span class="tag green">PostgreSQL</span>
+          <span class="tag green">MySQL</span>
+          <span class="tag green">Redis</span>
+          <span class="tag green">Prisma</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <p class="skill-group-title">Cloud &amp; DevOps</p>
+        <div class="tags">
+          <span class="tag orange">AWS</span>
+          <span class="tag orange">Lambda</span>
+          <span class="tag orange">SQS</span>
+          <span class="tag orange">SNS</span>
+          <span class="tag orange">EC2</span>
+          <span class="tag orange">S3</span>
+          <span class="tag orange">CloudWatch</span>
+          <span class="tag orange">Docker</span>
+          <span class="tag orange">CI/CD</span>
+          <span class="tag orange">GitHub Actions</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="section-header fade-in">
+      <p class="section-label">Where I've worked</p>
+      <h2 class="section-title">Experience</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="timeline">
+
+      <!-- Bacancy -->
+      <div class="timeline-item fade-in">
+        <div class="timeline-dot green"></div>
+        <div class="timeline-meta">
+          <span class="timeline-role">Senior Software Engineer</span>
+          <span class="timeline-company">@ Bacancy Technology</span>
+          <span class="timeline-date">Nov 2023 – Present</span>
+        </div>
+        <span class="timeline-location">Remote</span>
+        <div class="timeline-body">
+          <ul>
+            <li>Designed a <strong>high-performance loan processing pipeline</strong> that cut processing time by <strong>15%</strong>.</li>
+            <li>Developed real-time <strong>webhook integrations with HubSpot CRM</strong> for seamless data synchronization.</li>
+            <li>Engineered scalable RESTful APIs with 3rd-party integrations to automate loan pre-approvals, PDF generation, and notification workflows.</li>
+            <li>Delivered a robust <strong>TypeScript Koa + Prisma/MySQL</strong> backend supporting multi-module domains (calendar, email, tasks, chat, notifications).</li>
+            <li>Implemented <strong>distributed cron workflows with Redis Redlock</strong> for sync, reminders, quota resets, and analytics.</li>
+            <li>Strengthened security with JWT auth, Helmet/CORS, Zod validation, Winston logging, and Bugsnag monitoring.</li>
+            <li>Containerized services with <strong>Docker</strong> and automated deployments via <strong>GitHub Actions → AWS ECS Fargate</strong>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Genea -->
+      <div class="timeline-item fade-in">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-role">Software Engineer II</span>
+          <span class="timeline-company">@ Genea</span>
+          <span class="timeline-date">Apr 2021 – Oct 2023</span>
+        </div>
+        <span class="timeline-location">Remote</span>
+        <div class="timeline-body">
+          <ul>
+            <li>Built APIs for mobile &amp; web clients including <strong>Apple Wallet integration</strong>, boosting user engagement by <strong>34%</strong>.</li>
+            <li>Developed an <strong>elevator destination dispatch system</strong> using PostgreSQL, Redis, and TypeScript — reducing wait times by <strong>12%</strong>.</li>
+            <li>Implemented <strong>event-driven architectures with AWS</strong> services; migrated infrastructure from Heroku to AWS using Terraform.</li>
+            <li>Integrated real-time security alerts with <strong>Cisco Webex, Microsoft Teams, and Slack</strong> for rapid threat notification.</li>
+            <li>Enhanced webhook services for structured event data, improving data analytics reliability for <strong>200+ clients</strong>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Internship -->
+      <div class="timeline-item fade-in">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-role">Software Engineer Intern</span>
+          <span class="timeline-company">@ BISAG</span>
+          <span class="timeline-date">Nov 2019 – May 2020</span>
+        </div>
+        <span class="timeline-location">Gandhinagar, India</span>
+        <div class="timeline-body">
+          <ul>
+            <li>Developed a web-based <strong>geospatial data visualization system</strong> using JavaScript, Leaflet.js, and PostgreSQL.</li>
+            <li>Contributed to an urban/rural growth analysis system over 5 years using Java and PostgreSQL.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-header fade-in">
+      <p class="section-label">Things I've built</p>
+      <h2 class="section-title">Side Projects</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card fade-in">
+        <div class="project-header">
+          <span class="project-name">GenAI Intent Classification</span>
+          <span class="project-badge">AI / Serverless</span>
+        </div>
+        <ul class="project-desc">
+          <li>Built a Conversation API service for dynamic AI-driven user interactions using GenAI models.</li>
+          <li>Leveraged <strong>AWS Lambda and S3</strong> to implement an event-driven architecture for conversation history and processing.</li>
+        </ul>
+        <div class="tags">
+          <span class="tag">GenAI</span>
+          <span class="tag orange">AWS Lambda</span>
+          <span class="tag orange">S3</span>
+          <span class="tag purple">Event-driven</span>
+          <span class="tag">TypeScript</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <div class="section-header fade-in">
+      <p class="section-label">Academic background</p>
+      <h2 class="section-title">Education</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="edu-card fade-in">
+      <div class="edu-icon">🎓</div>
+      <div>
+        <p class="edu-degree">Bachelor of Technology — Computer Engineering</p>
+        <p class="edu-school">Dharmsinh Desai University</p>
+        <p class="edu-meta">Nadiad, Gujarat &nbsp;·&nbsp; July 2016 – May 2020</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="container">
+    <div class="section-header fade-in">
+      <p class="section-label">Thoughts &amp; writing</p>
+      <h2 class="section-title">Blog</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="blog-empty fade-in">
+      <div class="blog-empty-icon">✍️</div>
+      <p class="blog-empty-title">Posts coming soon</p>
+      <p class="blog-empty-desc">I plan to write about things I'm curious about — tech, and whatever else I'm into at the moment.</p>
+      <div class="blog-topics">
+        <span class="blog-topic tech">⚙️ Tech</span>
+        <span class="blog-topic travel">✈️ Travel</span>
+        <span class="blog-topic sport">🎯 Hobbies</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header fade-in" style="text-align:center">
+      <p class="section-label">Let's connect</p>
+      <h2 class="section-title">Get in Touch</h2>
+      <div class="section-line" style="margin:0.75rem auto 0"></div>
+    </div>
+    <p class="contact-desc fade-in">
+      Open to new opportunities, collaborations, or just a good tech conversation. Feel free to reach out.
+    </p>
+    <div class="contact-cards fade-in">
+      <a class="contact-card" href="mailto:parmarhardik633@gmail.com">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        parmarhardik633@gmail.com
+      </a>
+      <a class="contact-card" href="tel:+919925631080">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3 2.2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
+        +91 99256 31080
+      </a>
+      <a class="contact-card" href="https://github.com/hardiksgit" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        github.com/hardiksgit
+      </a>
+      <a class="contact-card" href="https://linkedin.com/in/hardik98" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        linkedin.com/in/hardik98
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Designed &amp; built by Hardik Parmar &nbsp;·&nbsp; 2025</p>
+</footer>
+
+<script>
+  // Scroll fade-in
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.12 }
+  );
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
